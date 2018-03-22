@@ -1,13 +1,7 @@
 # CS448_MP3
 Description:
-'''
-mp3
-'''
+> mp3
 Environment:
-'''
-Python 3
-'''
+> Python 3
 Packages:
-'''
-Numpy
-'''
+> Numpy
