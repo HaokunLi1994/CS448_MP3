@@ -11,19 +11,19 @@ import numpy as np
 
 class NaiveBayes(object):
     """ Naive bayes class."""
-    def __init__(self):
+    def __init__(self, laplace=0.1, window=None):
         self.num_class = None
         self.labels = None
-        self.value_0 = 0
-        self.value_1 = 1
+        self.possible_values = [0, 1]
         
         # Laplacian smoothing to avoid devision by 0
-        self.laplace = 0.1
+        self.laplace = laplace
+        self.window = window
         
         # In the form of {label: prob}
         self.prior = dict()
         
-        # In the form of (label: {position: (prob-0, prob-1)})
+        # In the form of (label: {position: {value: prob}})
         self.likelihood = dict()
         pass
     
@@ -62,14 +62,12 @@ class NaiveBayes(object):
             pos = itertools.product(range(height), range(width))
             for position in pos:
                 temp_slice = temp_class[:, position[0], position[1]]
-                
-                count_0 = np.sum(temp_slice==0) + self.laplace
-                count_1 = np.sum(temp_slice==1) + self.laplace                
-                prob_0 = count_0 / (temp_slice.shape[0] + 2 * self.laplace)
-                prob_1 = count_1 / (temp_slice.shape[0] + 2 * self.laplace)
-                
-                temp_dict.update({position: (prob_0, prob_1)})
-                
+                temp_prob_dict = dict()
+                for value in self.possible_values:
+                    count = np.sum(temp_slice==value) + self.laplace
+                    prob = count / (temp_slice.shape[0] + 2 * self.laplace)
+                    temp_prob_dict.update({value: prob})                
+                temp_dict.update({position: temp_prob_dict})                
             self.likelihood.update({label: temp_dict})
         pass
     
@@ -107,10 +105,7 @@ class NaiveBayes(object):
                 log_likelihood = np.log(self.prior[label])
                 for position in pos:
                     value = test[i][position[0]][position[1]]
-                    if value == self.value_0:
-                        log_likelihood += np.log(self.likelihood[label][position][0])
-                    elif value == self.value_1:
-                        log_likelihood += np.log(self.likelihood[label][position][1])
+                    log_likelihood += np.log(self.likelihood[label][position][value])
                 pred_matrix[i][label] = log_likelihood
         
         pred_matrix = np.array(pred_matrix)
