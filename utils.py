@@ -56,3 +56,19 @@ def accuracy(label, pred):
     """
     correct = np.sum(label==pred)
     return correct / len(label)
+
+def confusion_matrix(label, pred, model):
+    """ Generate confusion matrix
+    
+    Args:
+        label(np.array): 1-D, true labels
+        pred(np.array): 1-D, predicted
+    Returns:
+        matrix(np.array): 2-D square matrix
+    """
+    matrix = np.zeros((model.num_class, model.num_class), dtype=np.int16)
+    for i in range(len(label)):
+        row = label[i]
+        column = pred[i]
+        matrix[row][column] += 1
+    return matrix
