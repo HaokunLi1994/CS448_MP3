@@ -6,11 +6,14 @@ Created on Sun Mar 25 09:53:27 2018
 @author: Haokun Li
 """
 
+import time
 import utils
 from naive_bayes import NaiveBayes
 from bayes_window import Window
 
 if __name__ == '__main__':
+    start = time.time()
+    
     # Global variables
     TRAIN_PATH = ('C:/Users/Shiratori/Desktop/' + 
                   'CS 440 - Artificial Intelligence/' +
@@ -32,9 +35,11 @@ if __name__ == '__main__':
     
     # Predict
     pred_matrix, pred = model.predict(X_test)
+    end = time.time()
     
     # Output
     acc = utils.accuracy(y_test, pred)
+    print('Time used: {0:.3f} second(s).'.format(end - start))
     print('Smoothing: {0}'.format(model.laplace))
     print('Accuracy is {0:.3f}\n'.format(acc))
     print('Confusion matrix:')
