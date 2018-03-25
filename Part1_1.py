@@ -23,7 +23,7 @@ if __name__ == '__main__':
     X_test, y_test = utils.load_data(TEST_PATH)
     
     # Initialize model
-    model = NaiveBayes()
+    model = NaiveBayes(laplace=0.1)
     
     # Fit model
     model.fit(X_train, y_train)
@@ -33,4 +33,7 @@ if __name__ == '__main__':
     
     # Output
     acc = utils.accuracy(y_test, pred)
+    print('Smoothing: {0}'.format(model.laplace))
     print('Accuracy is {0:.3f}'.format(acc))
+    print('Confusion matrix:')
+    print(utils.confusion_matrix(y_test, pred, model))

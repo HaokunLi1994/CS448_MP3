@@ -36,4 +36,6 @@ if __name__ == '__main__':
     # Output
     acc = utils.accuracy(y_test, pred)
     print('Smoothing: {0}'.format(model.laplace))
-    print('Accuracy is {0:.3f}'.format(acc))
+    print('Accuracy is {0:.3f}\n'.format(acc))
+    print('Confusion matrix:')
+    print(utils.confusion_matrix(y_test, pred, model))
