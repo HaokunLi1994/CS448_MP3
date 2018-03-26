@@ -6,10 +6,13 @@ Created on Fri Mar 16 22:01:11 2018
 @author: Haokun Li
 """
 
+import time
 import utils
 from naive_bayes import NaiveBayes
 
 if __name__ == '__main__':
+    start = time.time()
+    
     # Global variables
     TRAIN_PATH = ('C:/Users/Shiratori/Desktop/' + 
                   'CS 440 - Artificial Intelligence/' +
@@ -32,8 +35,10 @@ if __name__ == '__main__':
     pred_matrix, pred = model.predict(X_test)
     
     # Output
+    end = time.time()
     acc = utils.accuracy(y_test, pred)
+    print('Time used: {0:.3f} second(s)'.format(end - start))
     print('Smoothing: {0}'.format(model.laplace))
-    print('Accuracy is {0:.3f}'.format(acc))
+    print('Accuracy is {0:.3f}\n'.format(acc))
     print('Confusion matrix:')
     print(utils.confusion_matrix(y_test, pred, model))

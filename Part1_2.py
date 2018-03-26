@@ -27,7 +27,7 @@ if __name__ == '__main__':
     X_test, y_test = utils.load_data(TEST_PATH)
     
     # Initialize model
-    window = Window(2, 2, overlap=False)
+    window = Window(4, 4, overlap=False)
     model = NaiveBayes(laplace=0.1, window=window)
     
     # Fit model
@@ -39,7 +39,7 @@ if __name__ == '__main__':
     
     # Output
     acc = utils.accuracy(y_test, pred)
-    print('Time used: {0:.3f} second(s).'.format(end - start))
+    print('Time used: {0:.3f} second(s)'.format(end - start))
     print('Smoothing: {0}'.format(model.laplace))
     print('Accuracy is {0:.3f}\n'.format(acc))
     print('Confusion matrix:')
