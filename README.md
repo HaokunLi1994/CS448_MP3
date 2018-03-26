@@ -1,10 +1,15 @@
 # CS448_MP3
+**Description:**
 mp3
 
-Environment:
-
+**Environment:**
 Python 3
 
-Packages:
+**Packages:**
+numpy
+pandas
+seaborn
+matplotlib
 
-Numpy
+time
+itertools
