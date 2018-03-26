@@ -8,7 +8,6 @@ Created on Thu Mar 15 16:24:08 2018
 
 import itertools
 import numpy as np
-from bayes_window import Window
 
 class NaiveBayes(object):
     """ Naive bayes class."""
@@ -26,6 +25,9 @@ class NaiveBayes(object):
         
         # In the form of {label: prob}
         self.prior = dict()
+        
+        # In the form of {label: {position: {value: prob}}}
+        self.likelihood = dict()
         pass
     
     def _compute_prior(self, y):
@@ -109,3 +111,30 @@ class NaiveBayes(object):
         pred_matrix = np.array(pred_matrix)
         pred = np.argmax(pred_matrix, axis=1)        
         return pred_matrix, pred
+    
+    def compute_likelihood(self, X, y):
+        """ Compute likelihood and update it.
+
+        Args:
+            X(np.array): 3-D, (#, height, width), features
+            y(np.array): 1-D, true labels
+        Returns:
+            (None)
+        """
+        N, height, width = X.shape
+        labels = list(set(y))
+        
+        for label in labels:
+            temp_dict = dict()
+            temp_class = X[np.where(y==label)]
+            pos = itertools.product(range(height), range(width))
+            for position in pos:
+                temp_slice = temp_class[:, position[0], position[1]]
+                temp_prob_dict = dict()
+                for value in self.possible_values:
+                    count = np.sum(temp_slice==value) + self.laplace
+                    prob = count / (temp_slice.shape[0] + 2 * self.laplace)
+                    temp_prob_dict.update({value: prob})                
+                temp_dict.update({position: temp_prob_dict})                
+            self.likelihood.update({label: temp_dict})
+        pass
