@@ -15,12 +15,8 @@ if __name__ == '__main__':
     start = time.time()
     
     # Global variables
-    TRAIN_PATH = ('C:/Users/Shiratori/Desktop/' + 
-                  'CS 440 - Artificial Intelligence/' +
-                  'mp3/digitdata/optdigits-orig_train.txt')
-    TEST_PATH = ('C:/Users/Shiratori/Desktop/' + 
-                 'CS 440 - Artificial Intelligence/' +
-                 'mp3/digitdata/optdigits-orig_test.txt')
+    TRAIN_PATH = ('digitdata/optdigits-orig_train.txt')
+    TEST_PATH = ('digitdata/optdigits-orig_test.txt')
     
     # Load data sets
     X_train, y_train = utils.load_data(TRAIN_PATH)
