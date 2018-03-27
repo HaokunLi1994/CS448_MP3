@@ -71,6 +71,29 @@ def odds_map(digit1, digit2, model):
     plt.show()
     pass
 
+def find_tokens(pred_matrix, label):
+    """ Find tokens
+    
+    Args:
+        pred_matrix(np.array)
+        label(np.array)
+    Returns:
+        high_tokens(list)
+        low_tokens(list)
+    """
+    high_tokens = []
+    low_tokens = []
+    
+    for digit in range(10):
+        ind = np.where(label==digit)[0]
+        myslice = pred_matrix[ind, digit]
+        low_ind = myslice.argmin()
+        high_ind = myslice.argmax()
+        high_tokens.append(ind[high_ind])
+        low_tokens.append(ind[low_ind])
+        
+    return high_tokens, low_tokens
+
 if __name__ == '__main__':
     start = time.time()
     
@@ -99,7 +122,8 @@ if __name__ == '__main__':
     print('Accuracy is {0:.3f}\n'.format(acc))
     print('Confusion matrix:')
     print(pd.DataFrame(utils.confusion_matrix(y_test, pred)), '\n')
+    high_tokens, low_tokens = find_tokens(pred_matrix, y_test)
     print('Highest tokens:')
-    print(np.argmax(pred_matrix, axis=0), '\n')
+    print(high_tokens)
     print('Lowest tokens:')
-    print(np.argmin(pred_matrix, axis=0))
+    print(low_tokens)
