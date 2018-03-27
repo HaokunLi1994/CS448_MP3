@@ -66,9 +66,15 @@ def confusion_matrix(label, pred, model):
     Returns:
         matrix(np.array): 2-D square matrix
     """
-    matrix = np.zeros((model.num_class, model.num_class), dtype=np.int16)
+
+    matrix = np.zeros((model.num_class, model.num_class))
+
     for i in range(len(label)):
         row = label[i]
         column = pred[i]
         matrix[row][column] += 1
+    
+    count_class = np.sum(matrix, axis=1)
+    for i in range(model.num_class):
+        matrix[i, :] = matrix[i, :] / count_class[i]
     return matrix

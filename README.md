@@ -9,5 +9,15 @@ Python 3
 
 **Packages:**
 
-Numpy
+numpy
 
+pandas
+
+seaborn
+
+matplotlib
+
+
+time
+
+itertools
