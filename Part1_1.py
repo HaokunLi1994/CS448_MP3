@@ -37,6 +37,7 @@ def heat_map(digit, model):
     
     # Plot
     sns.heatmap(myplot)
+    plt.show()
     pass
 
 def odds_map(digit1, digit2, model):
@@ -67,6 +68,7 @@ def odds_map(digit1, digit2, model):
     
     # Plot
     sns.heatmap(odds_map)
+    plt.show()
     pass
 
 if __name__ == '__main__':
@@ -96,7 +98,7 @@ if __name__ == '__main__':
     print('Smoothing: {0}'.format(model.laplace))
     print('Accuracy is {0:.3f}\n'.format(acc))
     print('Confusion matrix:')
-    print(pd.DataFrame(utils.confusion_matrix(y_test, pred, model)), '\n')
+    print(pd.DataFrame(utils.confusion_matrix(y_test, pred)), '\n')
     print('Highest tokens:')
     print(np.argmax(pred_matrix, axis=0), '\n')
     print('Lowest tokens:')

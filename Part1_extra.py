@@ -17,7 +17,7 @@ def load_data():
     """ Load training data and test data
     
     Args:
-        path(str): path to folder
+        (None)
     Returns:
         X_train
         y_train
@@ -122,4 +122,4 @@ if __name__ == '__main__':
     print('Smoothing: {0}'.format(model.laplace))
     print('Accuracy is {0:.3f}\n'.format(acc))
     print('Confusion matrix:')
-    print(pd.DataFrame(utils.confusion_matrix(y_test, pred, model)))
+    print(pd.DataFrame(utils.confusion_matrix(y_test, pred)))
