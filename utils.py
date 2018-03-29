@@ -70,7 +70,7 @@ def confusion_matrix(label, pred):
     matrix = np.zeros((num_class, num_class))
     for i in range(len(label)):
         row = label[i]
-        column = pred[i]
+        column = int(pred[i])
         matrix[row][column] += 1
     
     count_class = np.sum(matrix, axis=1)
