@@ -17,6 +17,8 @@ seaborn
 
 matplotlib
 
+scikit-learn
+
 
 time
 
