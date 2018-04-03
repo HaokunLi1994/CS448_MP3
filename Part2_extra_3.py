@@ -3,7 +3,7 @@
 """
 Created on Sun Apr  1 19:00:53 2018
 
-@author: Shiratori
+@author: Haokun Li
 """
 
 import time
@@ -26,7 +26,7 @@ if __name__ == '__main__':
     X_test = np.reshape(X_test, (-1, 1024))
     
     # Initialize model
-    model = SVC(tol=1e-6)
+    model = SVC(C=10, tol=1e-6)
     
     # Fit model
     model.fit(X_train, y_train)
