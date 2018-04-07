@@ -128,7 +128,7 @@ if __name__ == '__main__':
         weights = weights[0:len(weights)-1]   # throw out the last weight because it's a bias and we don't care about it
         weightimg = np.reshape(weights, (32,32))
         
-        plt.imshow(weightimg)
+        plt.imshow(weightimg, cmap='bwr')
         
         plt.title(str(i))
         plt.tick_params(
