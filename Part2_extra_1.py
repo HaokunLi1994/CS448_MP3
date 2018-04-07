@@ -1,38 +1,8 @@
 # -*- coding: utf-8 -*-
 """
-Created on Wed Mar 28 11:31:48 2018
+Created on Sat Apr  7 14:10:11 2018
 
 @author: jkell
-
-Result:
-    
-Finished training after 37 epochs.
-Accuracy on test set: 93.4684684685 %
-     0         1         2         3         4         5         6         7  \
-0  1.0  0.000000  0.000000  0.000000  0.000000  0.000000  0.000000  0.000000   
-1  0.0  0.822222  0.000000  0.000000  0.044444  0.000000  0.000000  0.066667   
-2  0.0  0.000000  0.878049  0.000000  0.000000  0.000000  0.000000  0.000000   
-3  0.0  0.000000  0.000000  0.969697  0.000000  0.030303  0.000000  0.000000   
-4  0.0  0.033898  0.000000  0.016949  0.932203  0.000000  0.000000  0.000000   
-5  0.0  0.000000  0.000000  0.000000  0.000000  1.000000  0.000000  0.000000   
-6  0.0  0.000000  0.000000  0.000000  0.023256  0.000000  0.953488  0.000000   
-7  0.0  0.000000  0.000000  0.000000  0.042553  0.000000  0.000000  0.936170   
-8  0.0  0.025000  0.000000  0.025000  0.000000  0.025000  0.000000  0.000000   
-9  0.0  0.023810  0.000000  0.000000  0.000000  0.000000  0.000000  0.000000   
-
-          8         9  
-0  0.000000  0.000000  
-1  0.044444  0.022222  
-2  0.097561  0.024390  
-3  0.000000  0.000000  
-4  0.016949  0.000000  
-5  0.000000  0.000000  
-6  0.023256  0.000000  
-7  0.000000  0.021277  
-8  0.925000  0.000000  
-9  0.047619  0.928571  
-
-
 """
 
 import DNN
@@ -40,6 +10,7 @@ import numpy as np
 import utils
 import matplotlib.pyplot as plt
 import pandas as pd
+from copy import deepcopy
 
 lin = lambda inp: inp
 
@@ -146,3 +117,36 @@ if __name__ == '__main__':
         pred[i] = P.forward(X_test[i,:])
         
     print(pd.DataFrame(utils.confusion_matrix(y_test, pred)), '\n')
+    
+    # Additional stuff for extra credit -- everything above this is duplicated from Part2_1.py
+    
+    plt.figure()
+    
+    for i in range(0,10):
+        plt.subplot(5,2,i+1)
+        weights = deepcopy(P.NNs[i].weights[0])    # grab the weights. there is only one hidden layer so just 1 weight vector
+        weights = weights[0:len(weights)-1]   # throw out the last weight because it's a bias and we don't care about it
+        weightimg = np.reshape(weights, (32,32))
+        
+        plt.imshow(weightimg)
+        
+        plt.title(str(i))
+        plt.tick_params(
+            axis='x',          # changes apply to the x-axis
+            which='both',      # both major and minor ticks are affected
+            bottom='off',      # ticks along the bottom edge are off
+            top='off',         # ticks along the top edge are off
+            labelbottom='off') # labels along the bottom edge are off
+        
+        plt.tick_params(
+            axis='y',          # changes apply to the x-axis
+            which='both',      # both major and minor ticks are affected
+            left='off',      # ticks along the bottom edge are off
+            right='off',         # ticks along the top edge are off
+            labelleft='off') # labels along the bottom edge are off
+        plt.colorbar(orientation='vertical')   
+        
+        
+     
+    plt.tight_layout()
+    plt.show()
