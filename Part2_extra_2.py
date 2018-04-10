@@ -18,12 +18,13 @@ import pandas as pd
 
 lin = lambda inp: inp
 
-def softmax(NNs, x, c):
-    summ = 0
-    for i in range(0,c+1):
+def softmax(NNs, x, c, sumstart=0, idxstart=0):
+    #sumstart is for optimization
+    summ = sumstart
+    for i in range(idxstart,c+1):
         summ += np.exp(NNs[i].forward(x))
     
-    return np.exp(NNs[c].forward(x))/summ
+    return np.exp(NNs[c].forward(x))/summ, summ
 
 class multiPerceptron:
     """ specific implentation of the neural network
@@ -56,8 +57,9 @@ class multiPerceptron:
         results = np.zeros((10,))
         maxn = -999999999999
         maxr = 0
+        summ=0
         for i in range(0,10):
-            a = softmax(self.NNs, X, i)
+            a,summ = softmax(self.NNs, X, i, summ, i)
             results[i] = a
             if (results[i] > maxn):
                 maxr = i
