@@ -37,9 +37,12 @@ class NeuralNetwork:
         self.hlayers.append(thislayer)
         
         
-    def generate_weights(self):
+    def generate_weights(self, mag=1):
         """ Generate init weights for this neural network
         weights will be randomized
+        
+        Args:
+            mag : multiply the initialized weights by this (to avoid overflows)
         """
         
         if (len(self.hlayers) == 0):
@@ -56,7 +59,7 @@ class NeuralNetwork:
         if (self.hlayers[0].bias == True):
             layersize += 1
             
-        weights.append(np.random.randn(insize, layersize))
+        weights.append(np.random.randn(insize, layersize)*mag)
         
         for i in range(0, len(self.hlayers)-1):
             layer1size = self.hlayers[i].size
